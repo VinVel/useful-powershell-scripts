@@ -1,10 +1,10 @@
 # ================== Konfiguration ==================
 $RepoApiUrl   = "https://api.github.com/repos/BtbN/FFmpeg-Builds/releases/latest"
 $AssetName    = "ffmpeg-master-latest-win64-gpl.zip"
-$BinTarget    = "C:\Users\vinvel\usr-bin"
-$StateFile    = "$PSScriptRoot\last_release.txt"
-$TempDir      = "$PSScriptRoot\ffmpeg_tmp"
-$ZipPath      = "$TempDir\$AssetName"
+$BinTarget    = "~/usr-bin"
+$StateFile    = "$PSScriptRoot/last_release.txt"
+$TempDir      = "$PSScriptRoot/ffmpeg_tmp"
+$ZipPath      = "$TempDir/$AssetName"
 
 # GitHub mag User-Agent
 $Headers = @{ "User-Agent" = "PowerShell" }
