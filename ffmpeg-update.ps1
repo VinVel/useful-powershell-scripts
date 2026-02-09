@@ -1,6 +1,6 @@
 # ================== Konfiguration ==================
 $RepoApiUrl   = "https://api.github.com/repos/BtbN/FFmpeg-Builds/releases/latest"
-$AssetName    = "ffmpeg-master-latest-win64-gpl-shared.zip"
+$AssetName    = "ffmpeg-master-latest-win64-gpl.zip"
 $BinTarget    = "C:\Users\vinvel\usr-bin"
 $StateFile    = "$PSScriptRoot\last_release.txt"
 $TempDir      = "$PSScriptRoot\ffmpeg_tmp"
