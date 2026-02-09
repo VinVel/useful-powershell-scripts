@@ -36,8 +36,8 @@ Write-Host $fullOutput
     -t $Duration `
     -vf "scale=3840:2160" `
     -c:v av1_qsv `
-    -q:v 14 `
-    -preset slow `
+    -q:v 19 `
+    -preset veryslow `
     -pix_fmt p010le `
     -c:a copy `
     $fullOutput
@@ -60,8 +60,8 @@ Write-Host $shortOutput
     -t $DurationShort `
     -vf "crop=607:1080:706:1080,scale=2160:3840" `
     -c:v av1_qsv `
-    -q:v 14 `
-    -preset slow `
+    -q:v 19 `
+    -preset veryslow `
     -pix_fmt p010le `
     -c:a copy `
     $shortOutput

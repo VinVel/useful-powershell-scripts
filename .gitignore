@@ -3,3 +3,4 @@
 *.txt
 
 rclone-mount.ps1
+whisperTransscribe.ps1
