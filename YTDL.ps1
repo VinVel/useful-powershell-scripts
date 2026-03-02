@@ -36,8 +36,8 @@ function EvaluateCombination {
 
 function PotServer {
 	try {
-		Push-Location ~/bgutil-ytdlp-pot-provider/Server
-		node build/main.js
+		Push-Location ~/bgutil-ytdlp-pot-provider/server
+		deno run --no-prompt --allow-env --allow-net --allow-ffi=. --allow-read=. --allow-sys ./src/main.ts --port 4416
 	} 
 	finally {Pop-Location}
 }
@@ -45,19 +45,19 @@ function PotServer {
 function YT-DLP-DownloadCommand {
 	switch ($outcome.Result) {
 		"YouTube Video, with Cookies" {
-			yt-dlp -v --add-metadata -P "$Directory" "$Link" --% --cookies "~/Downloads/cookies.txt" --windows-filenames --continue -f "bv*+mergeall[format_id*='251']/bv*+ba" --audio-multistreams -S quality,vcodec:av1:vp9:h264,acodec:opus:aac --embed-chapters --embed-thumbnail --embed-subs --compat-options no-live-chat --concat-playlist never --sub-lang all --convert-subs ass --merge-output-format mkv --extractor-args "youtube:player-client=default,mweb,web_safari,tv_embedded" --extractor-args "youtubepot-bgutilhttp:base_url=http://127.0.0.1:4416"
+			yt-dlp -v --add-metadata -P "$Directory" "$Link" --% --cookies "~/Downloads/cookies.txt" --windows-filenames --continue -f "bv*+mergeall[format_id*='251']/bv*+ba" --audio-multistreams -S quality,vcodec:av1:vp9:h264,acodec:opus:aac --embed-chapters --embed-thumbnail --embed-subs --compat-options no-live-chat --concat-playlist never --sub-lang all --convert-subs ass --merge-output-format mkv --extractor-args "youtube:player-client=default,mweb,web_safari,tv_embedded" --extractor-args "youtubepot-bgutilhttp:base_url=http://localhost:4416"
 		}
 		
 		"YouTube Audio, with Cookies" {
-			yt-dlp -v --add-metadata -P "$directory" "$link" --% --cookies "~/Downloads/cookies.txt" --windows-filenames --continue -x --embed-thumbnail --embed-thumbnail --concat-playlist never --embed-chapters --extractor-args "youtube:player-client=default,mweb,web_safari,tv_embedded" --extractor-args "youtubepot-bgutilhttp:base_url=http://127.0.0.1:4416"
+			yt-dlp -v --add-metadata -P "$directory" "$link" --% --js-runtimes deno --cookies "~/Downloads/cookies.txt" --windows-filenames --continue -x --embed-thumbnail --embed-thumbnail --concat-playlist never --embed-chapters --extractor-args "youtube:player-client=default,mweb,web_safari,tv_embedded" --extractor-args "youtubepot-bgutilhttp:base_url=http://localhost:4416"
 		}
 		
 		"YouTube Video, no Cookies" {
-			yt-dlp -v --add-metadata -P "$Directory" "$Link" --% --windows-filenames --continue -f "bv*+mergeall[format_id*='251']/bv*+ba" --audio-multistreams -S quality,vcodec:av1:vp9:h264,acodec:opus:aac --embed-chapters --embed-thumbnail --embed-subs --compat-options no-live-chat --concat-playlist never --sub-lang all --convert-subs ass --merge-output-format mkv --extractor-args "youtube:player-client=default,mweb,web_safari,tv_embedded" --extractor-args "youtubepot-bgutilhttp:base_url=http://127.0.0.1:4416"
+			yt-dlp -v --add-metadata -P "$Directory" "$Link" --% --windows-filenames --continue -f "bv*+mergeall[format_id*='251']/bv*+ba" --audio-multistreams -S quality,vcodec:av1:vp9:h264,acodec:opus:aac --embed-chapters --embed-thumbnail --embed-subs --compat-options no-live-chat --concat-playlist never --sub-lang all --convert-subs ass --merge-output-format mkv --extractor-args "youtube:player-client=default,mweb,web_safari,tv_embedded" --extractor-args "youtubepot-bgutilhttp:base_url=http://localhost:4416"
 		}
 		
 		"YouTube Audio, no Cookies" {
-			yt-dlp -v --add-metadata -P "$directory" "$link" --% --windows-filenames --continue -x  --embed-thumbnail --embed-thumbnail --concat-playlist never --embed-chapters --extractor-args "youtube:player-client=default,mweb,web_safari,tv_embedded" --extractor-args "youtubepot-bgutilhttp:base_url=http://127.0.0.1:4416"
+			yt-dlp -v --add-metadata -P "$directory" "$link" --% --windows-filenames --continue -x  --embed-thumbnail --embed-thumbnail --concat-playlist never --embed-chapters --extractor-args "youtube:player-client=default,mweb,web_safari,tv_embedded" --extractor-args "youtubepot-bgutilhttp:base_url=http://localhost:4416"
 		}
 	
 		"General Video, with Cookies" {
@@ -89,7 +89,8 @@ $outcome = EvaluateCombination
 $POT = Start-ThreadJob -ScriptBlock ${function:PotServer}
 
 # Wait for server to be ready
-do { Start-Sleep -Seconds 1 } until (Test-NetConnection -ComputerName 127.0.0.1 -Port 4416)   
+do { Start-Sleep -Seconds 1 }
+until ((Test-NetConnection -ComputerName localhost -Port 4416).TcpTestSucceeded)   
 
 YT-DLP-DownloadCommand
 
