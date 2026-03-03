@@ -45,15 +45,15 @@ function PotServer {
 function YT-DLP-DownloadCommand {
 	switch ($outcome.Result) {
 		"YouTube Video, with Cookies" {
-			yt-dlp -v --add-metadata -P "$Directory" "$Link" --% --cookies "~/Downloads/cookies.txt" --windows-filenames --continue -f "bv*+mergeall[format_id*='251']/bv*+ba" --audio-multistreams -S quality,vcodec:av1:vp9:h264,acodec:opus:aac --embed-chapters --embed-thumbnail --embed-subs --compat-options no-live-chat --concat-playlist never --sub-lang all --convert-subs ass --merge-output-format mkv --extractor-args "youtube:player-client=default,mweb,web_safari,tv_embedded" --extractor-args "youtubepot-bgutilhttp:base_url=http://localhost:4416"
+			yt-dlp -v --add-metadata -P "$Directory" "$Link" --% --cookies "~/Downloads/cookies.txt" --windows-filenames --continue -f "bestvideo[protocol!=m3u8]+mergeall[format_id='251'][format_id!*='drc']/bv*+ba" --audio-multistreams -S quality,vcodec:av1:vp9:h264,acodec:opus:aac --embed-chapters --embed-thumbnail --embed-subs --compat-options no-live-chat --concat-playlist never --sub-lang all --convert-subs ass --merge-output-format mkv --extractor-args "youtube:player-client=default,mweb,web_safari,tv_embedded" --extractor-args "youtubepot-bgutilhttp:base_url=http://localhost:4416"
 		}
 		
 		"YouTube Audio, with Cookies" {
-			yt-dlp -v --add-metadata -P "$directory" "$link" --% --js-runtimes deno --cookies "~/Downloads/cookies.txt" --windows-filenames --continue -x --embed-thumbnail --embed-thumbnail --concat-playlist never --embed-chapters --extractor-args "youtube:player-client=default,mweb,web_safari,tv_embedded" --extractor-args "youtubepot-bgutilhttp:base_url=http://localhost:4416"
+			yt-dlp -v --add-metadata -P "$directory" "$link" --% --cookies "~/Downloads/cookies.txt" --windows-filenames --continue -x --embed-thumbnail --embed-thumbnail --concat-playlist never --embed-chapters --extractor-args "youtube:player-client=default,mweb,web_safari,tv_embedded" --extractor-args "youtubepot-bgutilhttp:base_url=http://localhost:4416"
 		}
 		
 		"YouTube Video, no Cookies" {
-			yt-dlp -v --add-metadata -P "$Directory" "$Link" --% --windows-filenames --continue -f "bv*+mergeall[format_id*='251']/bv*+ba" --audio-multistreams -S quality,vcodec:av1:vp9:h264,acodec:opus:aac --embed-chapters --embed-thumbnail --embed-subs --compat-options no-live-chat --concat-playlist never --sub-lang all --convert-subs ass --merge-output-format mkv --extractor-args "youtube:player-client=default,mweb,web_safari,tv_embedded" --extractor-args "youtubepot-bgutilhttp:base_url=http://localhost:4416"
+			yt-dlp -v --add-metadata -P "$Directory" "$Link" --% --windows-filenames --continue -f "bestvideo[protocol!=m3u8]+mergeall[format_id='251'][format_id!*='drc']/bv*+ba" --audio-multistreams -S quality,vcodec:av1:vp9:h264,acodec:opus:aac --embed-chapters --embed-thumbnail --embed-subs --compat-options no-live-chat --concat-playlist never --sub-lang all --convert-subs ass --merge-output-format mkv --extractor-args "youtube:player-client=default,mweb,web_safari,tv_embedded" --extractor-args "youtubepot-bgutilhttp:base_url=http://localhost:4416"
 		}
 		
 		"YouTube Audio, no Cookies" {
